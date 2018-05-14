@@ -10,22 +10,37 @@ import java.nio.file.Paths;
  * @since 5/14/18
  */
 public class FileSystemUserContextStorage implements UserContextStorage {
+
+    static {
+        try {
+            Files.createDirectory(Paths.get("data"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     @Override
     public void save(String userName, String data) throws IOException {
-        throw new UnsupportedOperationException("This method is not supported in " + this.getClass());
+        Path dataFile = getPath(userName);
+        Files.write(dataFile, data.getBytes("UTF-8"));
     }
 
     @Override
     public void delete(String userName) throws IOException {
-        throw new UnsupportedOperationException("This method is not supported in " + this.getClass());
+        Path dataFile = getPath(userName);
+        Files.deleteIfExists(dataFile);
     }
 
     @Override
     public String load(String userName) throws IOException {
-        Path dataFile = Paths.get("data").resolve(userName);
+        Path dataFile = getPath(userName);
         if(Files.exists(dataFile))
             return new String(Files.readAllBytes(dataFile), "UTF-8");
         else
             return null;
+    }
+
+    private Path getPath(String userName) {
+        return Paths.get("data").resolve(userName);
     }
 }

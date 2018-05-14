@@ -9,6 +9,9 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -19,19 +22,20 @@ import java.util.concurrent.TimeUnit;
  */
 public class UserContextCache implements UserContextStorage {
     private final UserContextStorage delegate;
+    private final ExecutorService exec = Executors.newCachedThreadPool();
 
-    private final Cache<String, String> cache = CacheBuilder.newBuilder()
+    private final CacheLoader<String, String> cacheLoader = new CacheLoader<String, String>() {
+        @Override
+        public String load(String key) throws Exception {
+            return delegate.load(key);
+        }
+    };
+    private final LoadingCache<String, String> cache = CacheBuilder.newBuilder()
             .maximumSize(1000L)
+            .expireAfterAccess(30L, TimeUnit.MINUTES)
             .recordStats()
-            .build(
-                    new CacheLoader<String, String>() {
-                        @Override
-                        public String load(String key) throws Exception {
-                            return delegate.load(key);
-                        }
-                    }
-            );
-    
+            .build(cacheLoader);
+
 
     public UserContextCache(UserContextStorage delegate) {
         this.delegate = delegate;
@@ -39,16 +43,36 @@ public class UserContextCache implements UserContextStorage {
 
     @Override
     public void save(String userName, String data) throws IOException {
-        throw new UnsupportedOperationException("This method is not supported in " + this.getClass());
+        cache.put(userName, data);
+        exec.submit(() -> {
+            try {
+                delegate.save(userName, data);
+            } catch (IOException e) {
+                //TODO logger
+                cache.invalidate(userName);
+            }
+        });
     }
 
     @Override
-    public void delete(String userName) throws IOException {
-        throw new UnsupportedOperationException("This method is not supported in " + this.getClass());
+    public void delete(final String userName) throws IOException {
+        cache.invalidate(userName);
+
+        exec.submit(() -> {
+            try {
+                delegate.delete(userName);
+            } catch (IOException e) {
+                //TODO logger
+            }
+        });
     }
 
     @Override
     public String load(String userName) throws IOException {
-        throw new UnsupportedOperationException("This method is not supported in " + this.getClass());
+        try {
+            return cache.get(userName);
+        } catch (ExecutionException e) {
+            throw new IOException(e);
+        }
     }
 }
