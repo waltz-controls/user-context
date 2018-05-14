@@ -37,7 +37,7 @@ public class FileSystemUserContextStorage implements UserContextStorage {
         if(Files.exists(dataFile))
             return new String(Files.readAllBytes(dataFile), "UTF-8");
         else
-            return null;
+            throw new IOException("User data was not found: " + userName);
     }
 
     private Path getPath(String userName) {

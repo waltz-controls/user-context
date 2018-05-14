@@ -1,14 +1,10 @@
 package org.tango.webapp;
 
-import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -72,7 +68,8 @@ public class UserContextCache implements UserContextStorage {
         try {
             return cache.get(userName);
         } catch (ExecutionException e) {
-            throw new IOException(e);
+            //TODO logger
+            return null;
         }
     }
 }
