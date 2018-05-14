@@ -16,9 +16,9 @@
     </developers>
 
     <scm>
-        <connection>scm:git:git@github.com:tango-controls/tango-webapp-${project.artifactId}</connection>
-        <developerConnection>scm:git:git@github.com:tango-controls/tango-webapp-${project.artifactId}</developerConnection>
-        <url>https://github.com/tango-controls/tango-webapp-${project.artifactId}</url>
+        <connection>scm:git:git@github.com:tango-controls-webapp/tango-webapp-${project.artifactId}</connection>
+        <developerConnection>scm:git:git@github.com:tango-controls-webapp/tango-webapp-${project.artifactId}</developerConnection>
+        <url>https://github.com/tango-controls-webapp/tango-webapp-${project.artifactId}</url>
     </scm>
 
     <dependencies>
@@ -130,11 +130,6 @@
     </build>
 
     <repositories>
-        <!-- tango-controls bintray maven repo to resolve dependencies-->
-        <repository>
-            <id>bintray-tango-controls-maven</id>
-            <url>http://dl.bintray.com/tango-controls/maven</url>
-        </repository>
         <repository>
             <snapshots>
                 <enabled>false</enabled>
