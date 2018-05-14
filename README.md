@@ -8,6 +8,6 @@ This project provides microservice to load/store UserContext instances from [Tan
 
 This microservice has very simple API:
 
-1. `GET user-context/cache?id=<userName>` -- returns serialized in base64, gzipped UserContext instnace or null
+1. `GET user-context/cache?id=<userName>` -- returns serialized in base64, gzipped UserContext instance or null
 2. `POST user-context/cache?id=<userName>&data=<base64 UserContext>` -- stores data
 3. `POST user-context/cache?id=<userName>` -- deletes data
