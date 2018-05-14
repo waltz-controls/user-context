@@ -3,7 +3,6 @@ package org.tango.webapp;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 
 /**
  * @author Igor Khokhriakov <igor.khokhriakov@hzg.de>
@@ -11,12 +10,10 @@ import java.nio.file.Paths;
  */
 public class FileSystemUserContextStorage implements UserContextStorage {
 
-    static {
-        try {
-            Files.createDirectory(Paths.get("data"));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+    private final Path root;
+
+    public FileSystemUserContextStorage(Path root) {
+        this.root = root;
     }
 
     @Override
@@ -41,6 +38,6 @@ public class FileSystemUserContextStorage implements UserContextStorage {
     }
 
     private Path getPath(String userName) {
-        return Paths.get("data").resolve(userName);
+        return root.resolve(userName);
     }
 }
