@@ -14,40 +14,4 @@
         <servlet-name>UserContext</servlet-name>
         <url-pattern>/cache</url-pattern>
     </servlet-mapping>
-
-    <security-constraint>
-        <web-resource-collection>
-            <web-resource-name>CORS preflight</web-resource-name>
-            <url-pattern>/*</url-pattern>
-            <http-method>OPTIONS</http-method>
-        </web-resource-collection>
-    </security-constraint>
-    <security-constraint>
-        <web-resource-collection>
-            <web-resource-name>UserContextStorage</web-resource-name>
-            <url-pattern>/*</url-pattern><http-method>GET</http-method>
-            <http-method>HEAD</http-method>
-            <http-method>POST</http-method>
-            <http-method>PUT</http-method>
-            <http-method>DELETE</http-method>
-            <!-- etc -->
-        </web-resource-collection>
-        <auth-constraint>
-            <role-name>mtango-rest</role-name>
-            <role-name>desy-user</role-name>
-        </auth-constraint>
-    </security-constraint>
-    <login-config>
-        <auth-method>BASIC</auth-method>
-        <realm-name>TangoREST</realm-name>
-    </login-config>
-    <security-role>
-        <description>compatibility with DESY kerberos</description>
-        <role-name>desy-user</role-name>
-    </security-role>
-    <security-role>
-        <description>mtango rest api user</description>
-        <role-name>mtango-rest</role-name>
-    </security-role>
-
 </web-app>
