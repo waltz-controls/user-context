@@ -4,7 +4,7 @@
 
     <groupId>org.tango-controls.webapp</groupId>
     <artifactId>user-context</artifactId>
-    <version>0.4-SNAPSHOT</version>
+    <version>0.4</version>
     <packaging>war</packaging>
 
     <developers>
@@ -19,7 +19,7 @@
         <connection>scm:git:git@github.com:tango-controls-webapp/tango-webapp-${project.artifactId}</connection>
         <developerConnection>scm:git:git@github.com:tango-controls-webapp/tango-webapp-${project.artifactId}</developerConnection>
         <url>https://github.com/tango-controls-webapp/tango-webapp-${project.artifactId}</url>
-      <tag>HEAD</tag>
+      <tag>0.4</tag>
   </scm>
 
     <dependencies>
