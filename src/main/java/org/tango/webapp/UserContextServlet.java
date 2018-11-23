@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.zip.GZIPOutputStream;
@@ -23,9 +25,16 @@ public class UserContextServlet extends HttpServlet {
 
     @Override
     public void init() throws ServletException {
-        storage.set(new UserContextCache(
-                        new FileSystemUserContextStorage(
-                            Paths.get(getServletContext().getRealPath("data")))));
+        try {
+            String realPath = getServletContext().getRealPath("/data");
+            Path data = Paths.get(realPath);
+            if(!Files.exists(data)) Files.createDirectories(data);
+            storage.set(new UserContextCache(
+                            new FileSystemUserContextStorage(
+                                data)));
+        } catch (IOException e) {
+            throw new ServletException(e);
+        }
     }
 
     @Override
