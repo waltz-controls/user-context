@@ -2,7 +2,6 @@
 
 [![Build Status](https://travis-ci.org/tango-controls-waltz/tango-webapp-user-context.svg?branch=master)](https://travis-ci.org/tango-controls-waltz/tango-webapp-user-context) 
 [![release](https://img.shields.io/github/release/tango-controls-webapp/tango-webapp-user-context.svg?style=flat)](https://github.com/tango-controls-webapp/tango-webapp-user-context/releases/latest)
-[![License](https://img.shields.io/badge/license-LGPL--3.0-blue.svg)](https://github.com/tango-controls-webapp/tango-webapp-user-context/blob/master/LICENSE)
 
 # TangoWebapp UserContext external storage
 
