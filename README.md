@@ -10,3 +10,7 @@ This microservice has very simple API:
 1. `GET user-context/cache?id=<userName>` -- returns serialized in base64, gzipped UserContext instance or null
 2. `POST user-context/cache?id=<userName>&data=<base64 UserContext>` -- stores data
 3. `POST user-context/cache?id=<userName>` -- deletes data
+
+# Waltz plugin
+
+Refer to [waltz-user-context-plugin](/waltz-controls/waltz-user-context-plugin) for js API
