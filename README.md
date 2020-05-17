@@ -13,4 +13,4 @@ This microservice has very simple API:
 
 # Waltz plugin
 
-Refer to [waltz-user-context-plugin](/waltz-controls/waltz-user-context-plugin) for js API
+Refer to [waltz-user-context-plugin](https://github.com/waltz-controls/waltz-user-context-plugin) for js API
