@@ -42,14 +42,17 @@ public class UserContextServlet extends HttpServlet {
         String userName = req.getParameter("id");
         checkNotNull(userName);
 
-        response.setHeader("Content-Encoding", "gzip");
         String data = storage.get().load(userName);
-
+        if (data == null) {
+            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+            return;
+        }
 
         OutputStream outA = response.getOutputStream();
         PrintWriter outWriter = new PrintWriter(new GZIPOutputStream(outA), false);
 
-        response.setHeader("Content-transfer-encoding","base64");
+        response.setHeader("Content-Encoding", "gzip");
+        response.setHeader("Content-transfer-encoding", "base64");
         outWriter.print(data);
         outWriter.close();
     }
